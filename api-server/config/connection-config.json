@@ -1,0 +1,134 @@
+{
+    "name": "pharma-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "ManufacturerOrg",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "pharmachannel": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "peer0.manufacturer.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer0.distributor.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer0.pharmacy.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "peer0.regulator.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "organizations": {
+        "ManufacturerOrg": {
+            "mspid": "ManufacturerMSP",
+            "peers": ["peer0.manufacturer.example.com"],
+            "certificateAuthorities": ["ca.manufacturer.example.com"]
+        },
+        "DistributorOrg": {
+            "mspid": "DistributorMSP",
+            "peers": ["peer0.distributor.example.com"],
+            "certificateAuthorities": ["ca.distributor.example.com"]
+        },
+        "PharmacyOrg": {
+            "mspid": "PharmacyMSP",
+            "peers": ["peer0.pharmacy.example.com"],
+            "certificateAuthorities": ["ca.pharmacy.example.com"]
+        },
+        "RegulatorOrg": {
+            "mspid": "RegulatorMSP",
+            "peers": ["peer0.regulator.example.com"],
+            "certificateAuthorities": ["ca.regulator.example.com"]
+        }
+    },
+    "orderers": {
+        "orderer.example.com": {
+            "url": "grpcs://localhost:7050",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+            }
+        }
+    },
+    "peers": {
+        "peer0.manufacturer.example.com": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/manufacturer.example.com/peers/peer0.manufacturer.example.com/tls/ca.crt"
+            }
+        },
+        "peer0.distributor.example.com": {
+            "url": "grpcs://localhost:8051",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/distributor.example.com/peers/peer0.distributor.example.com/tls/ca.crt"
+            }
+        },
+        "peer0.pharmacy.example.com": {
+            "url": "grpcs://localhost:9051",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/pharmacy.example.com/peers/peer0.pharmacy.example.com/tls/ca.crt"
+            }
+        },
+        "peer0.regulator.example.com": {
+            "url": "grpcs://localhost:10051",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/regulator.example.com/peers/peer0.regulator.example.com/tls/ca.crt"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.manufacturer.example.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca.manufacturer.example.com",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/manufacturer.example.com/ca/ca.manufacturer.example.com-cert.pem"
+            }
+        },
+        "ca.distributor.example.com": {
+            "url": "https://localhost:8054",
+            "caName": "ca.distributor.example.com",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/distributor.example.com/ca/ca.distributor.example.com-cert.pem"
+            }
+        },
+        "ca.pharmacy.example.com": {
+            "url": "https://localhost:9054",
+            "caName": "ca.pharmacy.example.com",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/pharmacy.example.com/ca/ca.pharmacy.example.com-cert.pem"
+            }
+        },
+        "ca.regulator.example.com": {
+            "url": "https://localhost:10054",
+            "caName": "ca.regulator.example.com",
+            "tlsCACerts": {
+                "path": "../network/crypto-config/peerOrganizations/regulator.example.com/ca/ca.regulator.example.com-cert.pem"
+            }
+        }
+    }
+}

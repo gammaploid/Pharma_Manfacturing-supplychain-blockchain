@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+.DS_Store
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Hyperledger Fabric
+network/crypto-config/
+network/organizations/
+*.block
+*.tx
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Wallet
+wallet/
+**/wallet/*

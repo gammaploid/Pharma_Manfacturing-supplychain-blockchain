@@ -1,0 +1,180 @@
+Organizations:
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: crypto-config/ordererOrganizations/orderer.example.com/msp
+    Policies: &OrdererOrgPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+
+  - &Manufacturer
+    Name: ManufacturerMSP
+    ID: ManufacturerMSP
+    MSPDir: crypto-config/peerOrganizations/manufacturer.example.com/msp
+    Policies: &ManufacturerOrgPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('ManufacturerMSP.admin', 'ManufacturerMSP.peer', 'ManufacturerMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('ManufacturerMSP.admin', 'ManufacturerMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('ManufacturerMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.manufacturer.example.com
+        Port: 7051
+
+  - &Distributor
+    Name: DistributorMSP
+    ID: DistributorMSP
+    MSPDir: crypto-config/peerOrganizations/distributor.example.com/msp
+    Policies: &DistributorOrgPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('DistributorMSP.admin', 'DistributorMSP.peer', 'DistributorMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('DistributorMSP.admin', 'DistributorMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('DistributorMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.distributor.example.com
+        Port: 7051
+
+  - &Pharmacy
+    Name: PharmacyMSP
+    ID: PharmacyMSP
+    MSPDir: crypto-config/peerOrganizations/pharmacy.example.com/msp
+    Policies: &PharmacyOrgPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('PharmacyMSP.admin', 'PharmacyMSP.peer', 'PharmacyMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PharmacyMSP.admin', 'PharmacyMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PharmacyMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.pharmacy.example.com
+        Port: 7051
+
+  - &Regulator
+    Name: RegulatorMSP
+    ID: RegulatorMSP
+    MSPDir: crypto-config/peerOrganizations/regulator.example.com/msp
+    Policies: &RegulatorOrgPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('RegulatorMSP.admin', 'RegulatorMSP.peer', 'RegulatorMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('RegulatorMSP.admin', 'RegulatorMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('RegulatorMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.regulator.example.com
+        Port: 7051
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    V2_0: true
+
+  Orderer: &OrdererCapabilities
+    V2_0: true
+
+  Application: &ApplicationCapabilities
+    V2_0: true
+
+Application: &ApplicationDefaults
+  Organizations:
+  Policies: &ApplicationDefaultPolicies
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+  OrdererType: etcdraft
+  Addresses:
+    - orderer.example.com:7050
+  BatchTimeout: 1s
+  BatchSize:
+    MaxMessageCount: 100
+    AbsoluteMaxBytes: 10 MB
+    PreferredMaxBytes: 2 MB
+  MaxChannels: 0
+  EtcdRaft:
+    Consenters:
+      - Host: orderer.example.com
+        Port: 7050
+        ClientTLSCert: crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer.example.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer.example.com/tls/server.crt
+  Organizations:
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ChannelCapabilities
+
+Profiles:
+  PharmaChannel:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererOrg
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Manufacturer
+        - *Distributor
+        - *Pharmacy
+        - *Regulator
+      Policies:
+        <<: *ApplicationDefaultPolicies

@@ -1,0 +1,39 @@
+OrdererOrgs:
+  - Name: OrdererOrg
+    Domain: orderer.example.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+
+PeerOrgs:
+  - Name: Manufacturer
+    Domain: manufacturer.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: Distributor
+    Domain: distributor.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: Pharmacy
+    Domain: pharmacy.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: Regulator
+    Domain: regulator.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 3
