@@ -1,6 +1,17 @@
 # Pharmaceutical Manufacturing Supply Chain using Hyperledger Fabric
 
-A blockchain-based solution for tracking and verifying pharmaceutical products across the supply chain using Hyperledger Fabric.
+A blockchain-based solution for tracking and verifying pharmaceutical manfacturing processes across the supply chain using the permissioned Hyperledger Fabric, privaetly among stakeholder parties.
+
+### Motivation
+
+The pharmaceutical supply chain is a critical component of healthcare systems, and ensuring its transparency and efficiency is paramount. Recent research highlights the challenges faced in this domain. For example:
+
+- [Smith et al., 2024](https://www.sciencedirect.com/science/article/abs/pii/S1551741124000792) discuss the vulnerabilities in global pharmaceutical supply chains and emphasize the necessity of blockchain-based solutions to enhance transparency and traceability.
+
+This project addresses such challenges by leveraging **HyperLedger** to create a robust blockchain solution for the pharmaceutical supply chain.
+
+---
+
 
 ## System Architecture
 
