@@ -130,5 +130,129 @@
                 "path": "../network/crypto-config/peerOrganizations/regulator.example.com/ca/ca.regulator.example.com-cert.pem"
             }
         }
+    },
+    "ManufacturerOrg": {
+        "caName": "ca.manufacturer.pharma.com",
+        "connectionProfile": {
+            "name": "pharma-network-manufacturer",
+            "version": "1.0.0",
+            "client": {
+                "organization": "ManufacturerOrg",
+                "connection": {
+                    "timeout": {
+                        "peer": {
+                            "endorser": "300"
+                        },
+                        "orderer": "300"
+                    }
+                }
+            },
+            "channels": {
+                "pharmachannel": {
+                    "orderers": ["orderer.pharma.com"],
+                    "peers": {
+                        "peer0.manufacturer.pharma.com": {
+                            "endorsingPeer": true,
+                            "chaincodeQuery": true,
+                            "ledgerQuery": true,
+                            "eventSource": true
+                        }
+                    }
+                }
+            },
+            "organizations": {
+                "ManufacturerOrg": {
+                    "mspid": "ManufacturerMSP",
+                    "peers": ["peer0.manufacturer.pharma.com"],
+                    "certificateAuthorities": ["ca.manufacturer.pharma.com"]
+                }
+            },
+            "peers": {
+                "peer0.manufacturer.pharma.com": {
+                    "url": "grpcs://localhost:7051",
+                    "tlsCACerts": {
+                        "pem": "-----BEGIN CERTIFICATE-----\nYOUR_CA_CERT_HERE\n-----END CERTIFICATE-----"
+                    },
+                    "grpcOptions": {
+                        "ssl-target-name-override": "peer0.manufacturer.pharma.com",
+                        "hostnameOverride": "peer0.manufacturer.pharma.com"
+                    }
+                }
+            },
+            "certificateAuthorities": {
+                "ca.manufacturer.pharma.com": {
+                    "url": "https://localhost:7054",
+                    "caName": "ca.manufacturer.pharma.com",
+                    "tlsCACerts": {
+                        "pem": ["-----BEGIN CERTIFICATE-----\nYOUR_CA_CERT_HERE\n-----END CERTIFICATE-----"]
+                    },
+                    "httpOptions": {
+                        "verify": false
+                    }
+                }
+            }
+        }
+    },
+    "RegulatorOrg": {
+        "caName": "ca.regulator.pharma.com",
+        "connectionProfile": {
+            "name": "pharma-network-regulator",
+            "version": "1.0.0",
+            "client": {
+                "organization": "RegulatorOrg",
+                "connection": {
+                    "timeout": {
+                        "peer": {
+                            "endorser": "300"
+                        },
+                        "orderer": "300"
+                    }
+                }
+            },
+            "channels": {
+                "pharmachannel": {
+                    "orderers": ["orderer.pharma.com"],
+                    "peers": {
+                        "peer0.regulator.pharma.com": {
+                            "endorsingPeer": true,
+                            "chaincodeQuery": true,
+                            "ledgerQuery": true,
+                            "eventSource": true
+                        }
+                    }
+                }
+            },
+            "organizations": {
+                "RegulatorOrg": {
+                    "mspid": "RegulatorMSP",
+                    "peers": ["peer0.regulator.pharma.com"],
+                    "certificateAuthorities": ["ca.regulator.pharma.com"]
+                }
+            },
+            "peers": {
+                "peer0.regulator.pharma.com": {
+                    "url": "grpcs://localhost:8051",
+                    "tlsCACerts": {
+                        "pem": "-----BEGIN CERTIFICATE-----\nYOUR_CA_CERT_HERE\n-----END CERTIFICATE-----"
+                    },
+                    "grpcOptions": {
+                        "ssl-target-name-override": "peer0.regulator.pharma.com",
+                        "hostnameOverride": "peer0.regulator.pharma.com"
+                    }
+                }
+            },
+            "certificateAuthorities": {
+                "ca.regulator.pharma.com": {
+                    "url": "https://localhost:8054",
+                    "caName": "ca.regulator.pharma.com",
+                    "tlsCACerts": {
+                        "pem": ["-----BEGIN CERTIFICATE-----\nYOUR_CA_CERT_HERE\n-----END CERTIFICATE-----"]
+                    },
+                    "httpOptions": {
+                        "verify": false
+                    }
+                }
+            }
+        }
     }
 }

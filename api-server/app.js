@@ -3,6 +3,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const drugBatchRoutes = require('./routes/drugBatchRoutes');
+const regulatorRoutes = require('./routes/regulatorRoutes');
+const walletRoutes = require('./routes/walletRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -17,6 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1', drugBatchRoutes);
+app.use('/api/v1/regulator', regulatorRoutes);
+app.use('/api/v1/wallet', walletRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
